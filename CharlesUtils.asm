@@ -76,3 +76,23 @@ PromptInt:
 Exit:
 	li $v0, 10
 	syscall
+	
+# Subprogram:	PrintString
+# Author:	Ryu Parish
+# Purpose:	To print a string to the console
+# Input:	$a0 - The address of the string to be printed
+# Returns:	None
+# Side Effects:	The string is printed to the console
+.text
+PrintString:
+	addi $v0, $zero, 4
+	syscall
+	# Saving the return register so we can jump the PrintNewLine subprogram
+	addi $sp, $sp, -4
+	sw $ra, 0($sp)
+	jal PrintNewLine
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	jr $ra
+	
+	

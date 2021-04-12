@@ -16,8 +16,13 @@ main:
 	syscall
 	move $s1, $a0
 	
+	# Set the counter to 0
+	la $s2, 0
+	
 	# The Sentinel Control Loop
 	BeginLoop:
+	# First add to the incrementer
+	addi $s2, $s2, 1
 	la $a0, guess	#TODO
 	jal PromptInt
 	la $t0, ($v0)
@@ -36,12 +41,17 @@ main:
 	EndLoop:
 	la $a0, congrats 	#TODO
 	jal PrintString
+	jal PrintNewLine
+	la $a0, Tries
+	la $a1, ($s2)
+	jal PrintInt
 	jal Exit
 	
 .data
 prompt:		.asciiz "What is the maximum of the guesses?:"
 randguess:	.word 0
 guess:		.asciiz "What is your guess?: "
+Tries:		.asciiz "You tried this many times: "
 toohigh:	.asciiz "Too high. Try again."
 toolow:		.asciiz "Too low. Try again."
 congrats:	.asciiz "Congratulations, that's the right guess!"
