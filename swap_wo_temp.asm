@@ -41,6 +41,10 @@ main:
 	syscall
 	
 	# Implement the switch using only xor
+    # This works because when you make the xor of both of the variables
+    # you are getting the "bits where both integers have at least a single one
+    # This result can be used with xor individually on both the integers
+    # which will flip the bits where they were matching and keep the bits where they 
 	xor $t0, $s0, $s1
 	xor $s0, $s0, $t0
 	xor $s1, $s1, $t0

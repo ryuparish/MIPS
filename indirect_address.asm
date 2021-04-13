@@ -24,7 +24,8 @@ main:
 	lw $t2, 0($t0)
 	addi $t0, $t0, 4
 	div $t1, $t2
-	mflo $a1
+	mflo $t0
+	move $a1, $t0
 	
 	# Print out the presentation
 	la $a0, div_present
@@ -33,6 +34,7 @@ main:
 	
 	
 .data
+	.word 0
 	.word 0
 	.word 0
 prompt:		.asciiz "Please enter your number of miles: "
