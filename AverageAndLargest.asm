@@ -24,6 +24,12 @@ main:
 	# Read in the numbers
 	la $a0, prompt
 	jal PromptInt
+	sw $v0, 16($sp)
+	jal PrintNewLine
+	
+	# Read in the numbers
+	la $a0, prompt
+	jal PromptInt
 	sw $v0, 12($sp)
 	jal PrintNewLine
 	
@@ -39,32 +45,26 @@ main:
 	sw $v0, 4($sp)
 	jal PrintNewLine
 	
-	# Read in the numbers
-	la $a0, prompt
-	jal PromptInt
-	sw $v0, 0($sp)
-	jal PrintNewLine
-	
 	# Calling the subprogram to calculate the largest number
-	lw $a0, 12($sp)
+	lw $a0, 16($sp)
+	lw $a1, 12($sp)
+	jal LargestNumb
+	move $s0, $v0
+	la $a0, ($s0)
 	lw $a1, 8($sp)
 	jal LargestNumb
 	move $s0, $v0
 	la $a0, ($s0)
-	la $a1, 4($sp)
-	jal LargestNumb
-	move $s0, $v0
-	la $a0, ($s0)
-	la $a1, 0($sp)
+	lw $a1, 4($sp)
 	jal LargestNumb
 	move $s0, $v0
 	
 	# We now need to load the numbers from the stack, as we cannot use the stack pointers
 	# postioning alone)
-	lw $t1, 12($sp)
-	lw $t2, 8($sp)
-	lw $t3, 4($sp)
-	lw $t4, 0($sp)
+	lw $t1, 16($sp)
+	lw $t2, 12($sp)
+	lw $t3, 8($sp)
+	lw $t4, 4($sp)
 	
 	# Then we give back to the stack pointer
 	addi $sp, $sp, 16
